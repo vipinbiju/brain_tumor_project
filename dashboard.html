@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction Dashboard{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4">
+    <h1 class="text-4xl font-extrabold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-[#764af7]">
+        Your Prediction History
+    </h1>
+
+    {% if predictions %}
+    <div class="bg-[#1a202c] p-6 rounded-2xl card-glow border border-gray-700 overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-700">
+            <thead class="bg-[#0d111c]">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider rounded-tl-lg">
+                        Date & Time
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Image File
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Diagnosis
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider rounded-tr-lg">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800">
+                {% for prediction in predictions %}
+                <tr class="hover:bg-[#1a202c] transition duration-150 ease-in-out">
+                    <!-- Timestamp -->
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-white">{{ prediction.timestamp.strftime('%Y-%m-%d') }}</div>
+                        <div class="text-xs text-gray-500">{{ prediction.timestamp.strftime('%H:%M:%S') }} UTC</div>
+                    </td>
+                    
+                    <!-- Image File -->
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-300 truncate w-32 md:w-full">{{ prediction.image_filename }}</div>
+                    </td>
+                    
+                    <!-- Diagnosis & Badge -->
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {% set result_text = prediction.prediction_result %}
+                        {% set is_tumor = 'No Tumor' not in result_text %}
+                        
+                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ring-1 ring-opacity-70 
+                              {% if is_tumor %}bg-red-100 text-red-800 ring-red-500{% else %}bg-green-100 text-green-800 ring-green-500{% endif %}">
+                            {{ result_text }}
+                        </span>
+                    </td>
+                    
+                    <!-- Action Button (Simulated Re-viewing) -->
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <!-- NOTE: This link redirects to a new prediction and doesn't actually re-load the old result page state, but serves as a placeholder for a "Re-view" action -->
+                        <a href="{{ url_for('predict') }}" class="text-[#764af7] hover:text-pink-400 font-semibold">
+                            Run New Scan &rarr;
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center p-10 border border-dashed border-gray-700 rounded-xl bg-[#1a202c]">
+        <svg class="mx-auto h-12 w-12 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1l2-2m0 0l-2 2"></path>
+        </svg>
+        <h3 class="mt-2 text-sm font-medium text-white">No history found</h3>
+        <p class="mt-1 text-sm text-gray-500">
+            Get started by analyzing your first MRI scan.
+        </p>
+        <div class="mt-6">
+            <a href="{{ url_for('predict') }}" class="btn-primary inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-full text-white">
+                Upload Scan Now
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Upload MRI Scan{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-[70vh] px-4">
+    <div class="w-full max-w-lg bg-[#1a202c] p-8 md:p-10 rounded-2xl card-glow border border-gray-700">
+        <h2 class="text-4xl font-extrabold text-center mb-3 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-[#764af7]">
+            New Scan Analysis
+        </h2>
+        <p class="text-center text-gray-400 mb-8">
+            Please upload a high-resolution MRI scan image (JPG/PNG).
+        </p>
+        
+        <form method="POST" action="{{ url_for('predict') }}" enctype="multipart/form-data" class="space-y-6">
+            
+            <div class="flex items-center justify-center w-full">
+                <label for="image" class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-600 rounded-xl cursor-pointer bg-[#0d111c] hover:bg-[#1a202c] transition duration-300">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        <p class="mb-2 text-sm text-gray-400"><span class="font-semibold text-white">Click to upload</span> or drag and drop</p>
+                        <p class="text-xs text-gray-500">PNG or JPG (Max 2MB)</p>
+                    </div>
+                    <input id="image" type="file" name="image" class="hidden" accept=".jpg, .jpeg, .png" required onchange="displayFileName(this)">
+                </label>
+            </div>
+            
+            <p id="file-name-display" class="text-center text-sm text-[#764af7] font-medium"></p>
+
+            <button type="submit" class="btn-primary w-full text-white p-4 rounded-xl text-xl font-bold shadow-lg hover:shadow-2xl transition duration-300">
+                Analyze Scan
+            </button>
+        </form>
+
+        <script>
+            function displayFileName(input) {
+                const display = document.getElementById('file-name-display');
+                if (input.files && input.files.length > 0) {
+                    display.textContent = 'Selected File: ' + input.files[0].name;
+                } else {
+                    display.textContent = '';
+                }
+            }
+        </script>
+    </div>
+</div>
+{% endblock %}

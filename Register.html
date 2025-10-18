@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}User Registration{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-[70vh] px-4">
+    <div class="w-full max-w-md bg-[#1a202c] p-8 md:p-10 rounded-2xl card-glow border border-gray-700">
+        <h2 class="text-3xl font-bold text-center mb-8 text-white">Create Your Free Account</h2>
+        
+        <form method="POST" action="{{ url_for('register') }}">
+            
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-400 mb-1">Username</label>
+                <input type="text" id="username" name="username" required
+                       class="w-full p-3 bg-[#0d111c] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#764af7] focus:border-transparent transition"
+                       placeholder="JohnDoe">
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email Address</label>
+                <input type="email" id="email" name="email" required
+                       class="w-full p-3 bg-[#0d111c] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#764af7] focus:border-transparent transition"
+                       placeholder="you@example.com">
+            </div>
+
+            <div class="mb-8">
+                <label for="password" class="block text-sm font-medium text-gray-400 mb-1">Password</label>
+                <input type="password" id="password" name="password" required
+                       class="w-full p-3 bg-[#0d111c] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#764af7] focus:border-transparent transition"
+                       placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="btn-primary w-full text-white p-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition duration-300">
+                Register
+            </button>
+        </form>
+
+        <p class="mt-6 text-center text-sm text-gray-400">
+            Already have an account? 
+            <a href="{{ url_for('login') }}" class="text-[#764af7] hover:text-pink-400 font-medium transition duration-300">
+                Log in
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock %}

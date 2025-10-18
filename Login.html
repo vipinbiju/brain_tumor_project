@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}User Login{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-[70vh] px-4">
+    <div class="w-full max-w-md bg-[#1a202c] p-8 md:p-10 rounded-2xl card-glow border border-gray-700">
+        <h2 class="text-3xl font-bold text-center mb-8 text-white">Access Your Scan History</h2>
+        
+        <form method="POST" action="{{ url_for('login') }}">
+            
+            <div class="mb-6">
+                <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email Address</label>
+                <input type="email" id="email" name="email" required
+                       class="w-full p-3 bg-[#0d111c] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#764af7] focus:border-transparent transition"
+                       placeholder="you@example.com">
+            </div>
+
+            <div class="mb-8">
+                <label for="password" class="block text-sm font-medium text-gray-400 mb-1">Password</label>
+                <input type="password" id="password" name="password" required
+                       class="w-full p-3 bg-[#0d111c] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#764af7] focus:border-transparent transition"
+                       placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="btn-primary w-full text-white p-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition duration-300">
+                Login
+            </button>
+        </form>
+
+        <p class="mt-6 text-center text-sm text-gray-400">
+            Don't have an account? 
+            <a href="{{ url_for('register') }}" class="text-[#764af7] hover:text-pink-400 font-medium transition duration-300">
+                Register here
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock %}
